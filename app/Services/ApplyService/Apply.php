@@ -33,6 +33,10 @@ class Apply {
             "user_id"=>auth()->id(),
             "job_id"=>$request->job_id
         ]);
+        // return $request->job_id;
+        $job = Job::find($request->job_id)->users()->attach(auth()->id());
+        // return $job;
+
         return "Application Form is successfully sent";
     }
 

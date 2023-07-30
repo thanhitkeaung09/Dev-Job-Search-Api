@@ -49,4 +49,9 @@ class User extends Authenticatable
             get: fn ($value) => $value ? route('v1:show', $value) : $value,
         );
     }
+
+    public function jobs()
+    {
+        return $this->belongsToMany(Job::class,'job_users')->withTimestamps();
+    }
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('position');
             $table->boolean('shift')->default(0);
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('country');
             $table->longText('job_description');
             $table->longText('requirement');

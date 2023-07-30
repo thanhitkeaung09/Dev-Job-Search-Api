@@ -75,7 +75,8 @@ return [
 
     'folders' => [
         'dev_profiles' => 'dev_profiles',
-        'company' => 'company'
+        'company' => 'company',
+        'cv' => 'cv'
     ],
 
 ];

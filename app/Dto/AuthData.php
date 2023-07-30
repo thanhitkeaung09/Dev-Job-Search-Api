@@ -8,9 +8,7 @@ class AuthData implements Dto
         public string $name,
         public string $social_id,
         public string $email,
-        public string $password,
         public string $profile_image,
-        public string | null  $confirm_password,
     ) {
     }
 
@@ -20,9 +18,7 @@ class AuthData implements Dto
             name: $data['name'],
             social_id: $data['social_id'],
             email: $data['email'],
-            password: $data['password'],
             profile_image: $data['profile_image'],
-            confirm_password: $data['confirm_password']
         );
     }
 
@@ -32,8 +28,6 @@ class AuthData implements Dto
             'name' => $this->name,
             'social_id' => $this->social_id,
             'email' => $this->email,
-            'password' => $this->password,
-            'confirm_password' => $this->confirm_password,
             'profile_image' => $this->profile_image
         ];
     }

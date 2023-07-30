@@ -24,7 +24,6 @@ class SocialService
     {
         $user = User::query()->where('email', $request->email)->exists();
         if (!$user) {
-            if ($request->password === $request->confirm_password) {
                 $path = $this->fileStorageService->put(
                     config('filesystems.folders.dev_profiles'),
                     $request->profile_image,
@@ -33,12 +32,8 @@ class SocialService
                     "name" => $request->name,
                     "social_id" => $request->social_id,
                     "email" => $request->email,
-                    "password" => Hash::make($request->password),
                     "profile_image" => $path
                 ]);
-            } else {
-                throw new Exception('Password does not match');
-            }
         } else {
             throw new Exception('User Not Found');
         }

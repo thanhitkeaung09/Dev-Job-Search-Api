@@ -72,6 +72,14 @@ Route::prefix('v1')->as('v1')->group(static function (): void {
     )->name('email:login');
 
     /**
+     * Job Route
+     */
+
+    Route::prefix('job')->as('job')->middleware(['check.app.key','auth:sanctum'])->group(
+        base_path('/routes/v1/user/job.php')
+    );
+
+    /**
      * Image Attribut Casting
      */
     Route::get(

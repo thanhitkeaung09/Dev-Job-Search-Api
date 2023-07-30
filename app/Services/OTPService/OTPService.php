@@ -24,7 +24,8 @@ class OTPService
     {
         $otp = OTP::query()->where("otp", $request->code)->first();
         if ($otp && $otp->expired_at->greaterThan(now())) {
-            return $this->socialService->generate($otp, $otp->email);
+            $user = User::query()->where("email",$otp->email)->first();
+            return $this->socialService->generate($user, $otp->email);
         } else {
             throw new Exception("OTP Code is expired");
         }

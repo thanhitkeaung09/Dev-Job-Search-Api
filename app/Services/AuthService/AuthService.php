@@ -6,10 +6,12 @@ namespace App\Services\AuthService;
 
 use App\Mail\OTPSend;
 use App\Models\Admin;
+use App\Models\ForgetPassCode;
 use App\Models\OTP;
 use App\Models\User;
 use App\Services\FileStorageService\FileStorageService;
 use App\Services\SocialService\SocialService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -50,6 +52,7 @@ class AuthService
         ]);
         $otp = $this->generate();
         $OTP = $this->Otp($data->email, $otp);
+        ForgetPassCode::create(["email"=>$data->email,"otp"=>$otp, "expired_at" => now()->addMinute(30) ]);
         Mail::to($data->email)->send(new OTPSend($data, $OTP));
         return "Email Sent";
     }
@@ -94,13 +97,30 @@ class AuthService
 
     public function password_change($request)
     {
+        $otp = ForgetPassCode::query()->where("otp", $request->code)->first();
         $user = User::query()->where('email', $request->email)->first();
-        if ($request->password === $request->new_password) {
+        if ($otp && $otp->expired_at->greaterThan(now())) {
+
+            if ($request->password === $request->new_password) {
             $user->update(["password" => Hash::make($request->password)]);
-            return $this->socialService->generate($user, $user->email);
-        } else {
-            throw new Exception('Password does not match');
+            $this->socialService->generate($user, $user->email);
+
+            // Expire the OTP by setting expired_at to a past time (e.g., one second ago)
+            $otp->expired_at = Carbon::now()->subSecond();
+            $otp->save();
+            
+            return $user;
+        } } else {
+            throw new Exception("OTP Code is expired");
         }
+
+        // $user = User::query()->where('email', $request->email)->first();
+        // if ($request->password === $request->new_password) {
+        //     $user->update(["password" => Hash::make($request->password)]);
+        //     return $this->socialService->generate($user, $user->email);
+        // } else {
+        //     throw new Exception('Password does not match');
+        // }
     }
 
     public function logout(User | Admin $user)

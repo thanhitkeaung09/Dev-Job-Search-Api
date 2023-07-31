@@ -88,6 +88,14 @@ Route::prefix('v1')->as('v1')->group(static function (): void {
     );
 
     /**
+     * Forger Password Controller
+     */
+
+     Route::prefix('forget')->as(':forget')->middleware(['check.app.key', 'auth:sanctum'])->group(
+        base_path('/routes/v1/user/forget.php')
+    );
+
+    /**
      * Profile
      */
 

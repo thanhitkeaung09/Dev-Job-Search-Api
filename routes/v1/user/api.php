@@ -75,7 +75,7 @@ Route::prefix('v1')->as('v1')->group(static function (): void {
      * Job Route
      */
 
-    Route::prefix('job')->as(':job')->middleware(['check.app.key','auth:sanctum'])->group(
+    Route::prefix('job')->as(':job')->middleware(['check.app.key', 'auth:sanctum'])->group(
         base_path('/routes/v1/user/job.php')
     );
 
@@ -83,8 +83,23 @@ Route::prefix('v1')->as('v1')->group(static function (): void {
      * Job Applying Route
      */
 
-     Route::prefix('apply')->as(':apply')->middleware(['check.app.key','auth:sanctum'])->group(
+    Route::prefix('apply')->as(':apply')->middleware(['check.app.key', 'auth:sanctum'])->group(
         base_path('/routes/v1/user/apply.php')
+    );
+
+    /**
+     * Profile
+     */
+
+    Route::prefix('profile')->as(':profile')->middleware(['check.app.key', 'auth:sanctum'])->group(
+        base_path('/routes/v1/user/profile.php')
+    );
+
+    /**
+     * Admin Route Authentication
+     */
+    Route::prefix('admin')->as(':admin')->middleware('check.app.key')->group(
+        base_path('/routes/v1/admin/auth.php')
     );
 
     /**

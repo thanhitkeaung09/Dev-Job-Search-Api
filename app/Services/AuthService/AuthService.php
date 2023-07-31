@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\AuthService;
 
 use App\Mail\OTPSend;
+use App\Models\Admin;
 use App\Models\OTP;
 use App\Models\User;
 use App\Services\FileStorageService\FileStorageService;
@@ -102,7 +103,7 @@ class AuthService
         }
     }
 
-    public function logout($user)
+    public function logout(User | Admin $user)
     {
         $this->revoketoken($user);
         return "Logout Successfully";
@@ -111,5 +112,10 @@ class AuthService
     public function revoketoken(User | Admin $user)
     {
         return $user->tokens()->delete();
+    }
+
+    public function profile()
+    {
+        return Auth::user();
     }
 }

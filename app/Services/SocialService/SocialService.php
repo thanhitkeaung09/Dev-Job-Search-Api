@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\SocialService;
 
+use App\Models\Admin;
 use App\Models\OTP;
 use App\Models\User;
 use App\Services\FileStorageService\FileStorageService;
@@ -24,16 +25,16 @@ class SocialService
     {
         $user = User::query()->where('email', $request->email)->exists();
         if (!$user) {
-                $path = $this->fileStorageService->put(
-                    config('filesystems.folders.dev_profiles'),
-                    $request->profile_image,
-                );
-                $user = User::create([
-                    "name" => $request->name,
-                    "social_id" => $request->social_id,
-                    "email" => $request->email,
-                    "profile_image" => $path
-                ]);
+            $path = $this->fileStorageService->put(
+                config('filesystems.folders.dev_profiles'),
+                $request->profile_image,
+            );
+            $user = User::create([
+                "name" => $request->name,
+                "social_id" => $request->social_id,
+                "email" => $request->email,
+                "profile_image" => $path
+            ]);
         } else {
             throw new Exception('User Not Found');
         }

@@ -55,6 +55,19 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
+        'space' => [
+            'driver' => 's3',
+            'key' => env('SPACE_ACCESS_KEY_ID'),
+            'secret' => env('SPACE_SECRET_ACCESS_KEY'),
+            'region' => env('SPACE_DEFAULT_REGION'),
+            'bucket' => env('SPACE_BUCKET'),
+            'cdn_endpoint' => env('SPACE_CDN_ENDPOINT'),
+            'folder' => env('SPACE_FOLDER'),
+            'url' => env('SPACE_URL'),
+            'endpoint' => env('SPACE_ENDPOINT'),
+            'use_path_style_endpoint' => env('SPACE_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => true,
+        ],
 
     ],
 

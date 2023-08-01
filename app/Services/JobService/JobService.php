@@ -41,13 +41,13 @@ class JobService {
             $diffInDays = $createdAt->diffInDays($now);
     
             if ($diffInSeconds < 60) {
-                $job->created_ago = $diffInSeconds . " " . ($diffInSeconds === 1 ? "second ago" : "seconds ago");
+                $job->timestamp = $diffInSeconds . " " . ($diffInSeconds === 1 ? "second ago" : "seconds ago");
             } elseif ($diffInMinutes < 60) {
-                $job->created_ago = $diffInMinutes . " " . ($diffInMinutes === 1 ? "minute ago" : "minutes ago");
+                $job->timestamp = $diffInMinutes . " " . ($diffInMinutes === 1 ? "minute ago" : "minutes ago");
             } elseif ($diffInHours < 24) {
-                $job->created_ago = $diffInHours . " " . ($diffInHours === 1 ? "hour ago" : "hours ago");
+                $job->timestamp = $diffInHours . " " . ($diffInHours === 1 ? "hour ago" : "hours ago");
             } else {
-                $job->created_ago = $diffInDays . " " . ($diffInDays === 1 ? "day ago" : "days ago");
+                $job->timestamp = $diffInDays . " " . ($diffInDays === 1 ? "day ago" : "days ago");
             }
         }
     

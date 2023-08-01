@@ -35,7 +35,6 @@ class AuthController extends Controller
     public function mail_login(LoginMailRequest $request)
     {
         $user = User::query()->where("email", $request->payload()->email)->first();
-        // return $user;
         if (Hash::check($request->payload()->password, $user->password)) {
             return new ApiSuccessResponse($this->authService->mail_login($request->payload()));
 
@@ -44,7 +43,7 @@ class AuthController extends Controller
             return new ApiErrorResponse(
                 error : "Login Fail",
                 message: "false",
-                status: Response::HTTP_INTERNAL_SERVER_ERROR
+                status: 200
             );
         }
     }

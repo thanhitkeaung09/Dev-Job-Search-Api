@@ -14,7 +14,6 @@ class ApiErrorResponse implements Responsable
     public function __construct(
         protected string $message,
         protected bool $success,
-        protected string $error,
         protected int $status = HttpResponse::HTTP_INTERNAL_SERVER_ERROR,
         protected array $headers = [],
         protected ?Throwable $e = null,
@@ -25,7 +24,7 @@ class ApiErrorResponse implements Responsable
     {
         $response['success'] = $this->success;
         $response['status'] = $this->status;
-        $response['error'] = $this->error;
+        $response['message'] = $this->message;
 
         if ($this->e && config('app.debug')) {
             $response['debug'] = [

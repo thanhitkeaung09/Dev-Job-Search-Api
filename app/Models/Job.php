@@ -14,7 +14,7 @@ class Job extends Model
     protected function companyImage(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value ? route('v1:show', $value) : $value,
+            get: fn ($value) => $value , // need to change
         );
     }
     public function users()

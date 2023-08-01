@@ -66,7 +66,7 @@ class AuthService
             $this->socialService->generate($user, $user->email);
             return $user;
         }
-        return throw new Exception('Login Fail');
+        throw new Exception('Login Fail');
     }
 
     public function generate(): string

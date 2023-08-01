@@ -12,10 +12,11 @@ use Throwable;
 class ApiErrorResponse implements Responsable
 {
     public function __construct(
-        protected string $message,
+        protected string $message = 'false',
         protected int $status = HttpResponse::HTTP_INTERNAL_SERVER_ERROR,
         protected array $headers = [],
         protected ?Throwable $e = null,
+        protected mixed $data
     ) {
     }
 
@@ -34,7 +35,10 @@ class ApiErrorResponse implements Responsable
         }
 
         return response()->json(
-            data: $response,
+            data: [
+                'data' => $this->data,
+                'message' => $this->message,
+            ],
             status: $this->status,
             headers: $this->headers,
         );

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\AuthService;
 
+use App\Http\Response\ApiErrorResponse;
 use App\Mail\OTPSend;
 use App\Models\Admin;
 use App\Models\ForgetPassCode;
@@ -21,7 +22,8 @@ class AuthService
 {
     public function __construct(
         public SocialService $socialService,
-        public FileStorageService $fileStorageService
+        public FileStorageService $fileStorageService,
+        public ApiErrorResponse $apiErrorResponse
     ) {
     }
     public function lgoin($request)
@@ -64,7 +66,7 @@ class AuthService
             $this->socialService->generate($user, $user->email);
             return $user;
         }
-        throw new Exception('Login Fail');
+        return throw new Exception('Login Fail');
     }
 
     public function generate(): string

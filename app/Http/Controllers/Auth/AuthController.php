@@ -8,9 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthDataRequest;
 use App\Http\Requests\EmailRequest;
 use App\Http\Requests\LoginMailRequest;
+use App\Http\Response\ApiErrorResponse;
+use App\Models\User;
 use App\Services\AuthService\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -30,7 +34,19 @@ class AuthController extends Controller
 
     public function mail_login(LoginMailRequest $request)
     {
-        return new ApiSuccessResponse($this->authService->mail_login($request->payload()));
+        $user = User::query()->where("email", $request->payload()->email)->first();
+        // return $user;
+        if (Hash::check($request->payload()->password, $user->password)) {
+            return new ApiSuccessResponse($this->authService->mail_login($request->payload()));
+
+        }
+        else{
+            return new ApiErrorResponse(
+                error : "Login Fail",
+                message: "false",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 
     public function password_change(Request $request)

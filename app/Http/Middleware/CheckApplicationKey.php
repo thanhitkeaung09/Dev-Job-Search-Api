@@ -39,6 +39,7 @@ class CheckApplicationKey
     {
         return new ApiErrorResponse(
             message: __('Unauthorized'),
+            error : "Unauthorization Error",
             status: Response::HTTP_UNAUTHORIZED
         );
     }
@@ -47,6 +48,7 @@ class CheckApplicationKey
     {
         return new ApiErrorResponse(
             message: __('Outdated'),
+            error : 'Upgrade Require Error',
             status: Response::HTTP_UPGRADE_REQUIRED
         );
     }

@@ -10,7 +10,7 @@ class ApiSuccessResponse implements Responsable
 {
     public function __construct(
         protected mixed $data,
-        protected string $message = 'success',
+        protected bool $message = true,
         protected int $status = HttpResponse::HTTP_OK,
         protected array $headers = []
     )
@@ -23,7 +23,7 @@ class ApiSuccessResponse implements Responsable
         return response()->json(
             data: [
             'data' => $this->data,
-            'message' => $this->message,
+            'success' => $this->message,
             'status' => $this->status,
         ],
             status: $this->status,

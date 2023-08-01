@@ -29,6 +29,14 @@ class AuthController extends Controller
 
     public function register(EmailRequest $emailRequest)
     {
+        $user = User::query()->where('email', $emailRequest->payload()->email)->first();
+        if($user){
+            return new ApiErrorResponse(
+                success: false,
+                status: 200,
+                message: "User Already Exists",
+            );
+        }
         return new ApiSuccessResponse($this->authService->register($emailRequest->payload()));
     }
 

@@ -38,8 +38,8 @@ class CheckApplicationKey
     public function unauthorizedResponse(): ApiErrorResponse
     {
         return new ApiErrorResponse(
+            success : false,
             message: __('Unauthorized'),
-            error : "Unauthorization Error",
             status: Response::HTTP_UNAUTHORIZED
         );
     }
@@ -47,8 +47,8 @@ class CheckApplicationKey
     private function oudatedResponse(): ApiErrorResponse
     {
         return new ApiErrorResponse(
+            success : false,
             message: __('Outdated'),
-            error : 'Upgrade Require Error',
             status: Response::HTTP_UPGRADE_REQUIRED
         );
     }

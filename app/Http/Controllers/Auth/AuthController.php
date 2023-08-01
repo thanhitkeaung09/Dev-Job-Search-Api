@@ -35,15 +35,25 @@ class AuthController extends Controller
     public function mail_login(LoginMailRequest $request)
     {
         $user = User::query()->where("email", $request->payload()->email)->first();
-        if (Hash::check($request->payload()->password, $user->password)) {
+        if($user){
+        $password_true = Hash::check($request->payload()->password, $user->password);
+        if ($password_true) {
             return new ApiSuccessResponse($this->authService->mail_login($request->payload()));
-
         }
         else{
             return new ApiErrorResponse(
                 success: false,
                 status: 200,
                 message: "Login Fail",
+            );
+        }
+        }
+        else{
+
+            return new ApiErrorResponse(
+                success: false,
+                status: 200,
+                message: "User doesn't exist",
             );
         }
     }

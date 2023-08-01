@@ -13,6 +13,7 @@ class ApiErrorResponse implements Responsable
 {
     public function __construct(
         protected string $message,
+        protected bool $success,
         protected string $error,
         protected int $status = HttpResponse::HTTP_INTERNAL_SERVER_ERROR,
         protected array $headers = [],
@@ -22,7 +23,7 @@ class ApiErrorResponse implements Responsable
 
     public function toResponse($request): Response
     {
-        $response['message'] = $this->message;
+        $response['success'] = $this->success;
         $response['status'] = $this->status;
         $response['error'] = $this->error;
 

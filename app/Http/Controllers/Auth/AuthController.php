@@ -42,7 +42,7 @@ class AuthController extends Controller
         else{
             return new ApiErrorResponse(
                 error : "Login Fail",
-                message: "false",
+                success: false,
                 status: 200
             );
         }

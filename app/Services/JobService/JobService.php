@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\JobService;
 
 use App\Models\Job;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class JobService {
@@ -27,7 +28,30 @@ class JobService {
 
     public function show_jobs()
     {
-        return Job::query()->paginate(12);
+        $jobs = Job::query()->paginate(12);
+
+        // Convert the "created_at" date for each job into "minutes ago", "hours ago", or "days ago"
+        foreach ($jobs as $job) {
+            $createdAt = Carbon::parse($job->created_at);
+            $now = Carbon::now();
+    
+            $diffInSeconds = $createdAt->diffInSeconds($now);
+            $diffInMinutes = $createdAt->diffInMinutes($now);
+            $diffInHours = $createdAt->diffInHours($now);
+            $diffInDays = $createdAt->diffInDays($now);
+    
+            if ($diffInSeconds < 60) {
+                $job->created_ago = $diffInSeconds . " " . ($diffInSeconds === 1 ? "second ago" : "seconds ago");
+            } elseif ($diffInMinutes < 60) {
+                $job->created_ago = $diffInMinutes . " " . ($diffInMinutes === 1 ? "minute ago" : "minutes ago");
+            } elseif ($diffInHours < 24) {
+                $job->created_ago = $diffInHours . " " . ($diffInHours === 1 ? "hour ago" : "hours ago");
+            } else {
+                $job->created_ago = $diffInDays . " " . ($diffInDays === 1 ? "day ago" : "days ago");
+            }
+        }
+    
+        return $jobs;
     }
 
     public function single_job($type){

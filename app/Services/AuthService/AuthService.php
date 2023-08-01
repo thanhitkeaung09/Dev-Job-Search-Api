@@ -17,6 +17,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Throwable;
 
 class AuthService
 {
@@ -77,7 +78,7 @@ class AuthService
                 max: 999_999,
             );
         } catch (Throwable $exception) {
-            throw new OtpGenerationException('Failed to generate an OTP codes!');
+            throw new Exception('Failed to generate an OTP codes!');
         }
 
         return str_pad(

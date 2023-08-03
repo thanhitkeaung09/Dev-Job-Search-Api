@@ -56,6 +56,25 @@ class JobService {
 
     public function single_job($type){
         $job = Job::query()->find($type);
+
+        $createdAt = Carbon::parse($job->created_at);
+        $now = Carbon::now();
+
+        $diffInSeconds = $createdAt->diffInSeconds($now);
+        $diffInMinutes = $createdAt->diffInMinutes($now);
+        $diffInHours = $createdAt->diffInHours($now);
+        $diffInDays = $createdAt->diffInDays($now);
+
+        if ($diffInSeconds < 60) {
+            $job->timestamp = $diffInSeconds . " " . ($diffInSeconds === 1 ? "second ago" : "seconds ago");
+        } elseif ($diffInMinutes < 60) {
+            $job->timestamp = $diffInMinutes . " " . ($diffInMinutes === 1 ? "min ago" : "min ago");
+        } elseif ($diffInHours < 24) {
+            $job->timestamp = $diffInHours . " " . ($diffInHours === 1 ? "h ago" : "h ago");
+        } else {
+            $job->timestamp = $diffInDays . " " . ($diffInDays === 1 ? "d ago" : "d ago");
+        }
+
         return $job;
     }
 

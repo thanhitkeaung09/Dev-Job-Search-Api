@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class JobService {
     public function search_jobs($request)
     {
-        $query = DB::table('jobs');
+        $query = Job::query();
 
     $data = $request->all();
     if (is_array($data)) {

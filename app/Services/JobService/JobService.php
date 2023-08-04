@@ -17,7 +17,7 @@ class JobService {
     if (is_array($data)) {
         foreach ($data as $key => $value) {
             if ($value !== null) {
-                $query->where($key, $value);
+                $query->whereFindPositionOrCountryOrShift($key, $value);
             }
         }
     }

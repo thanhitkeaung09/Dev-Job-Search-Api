@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('responsibilities');
             $table->foreignId('company_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('salary');
+            $table->string('candidates');
             $table->timestamps();
         });
     }

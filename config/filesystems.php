@@ -39,7 +39,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -54,6 +54,19 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
+        ],
+        'space' => [
+            'driver' => 's3',
+            'key' => env('SPACE_ACCESS_KEY_ID'),
+            'secret' => env('SPACE_SECRET_ACCESS_KEY'),
+            'region' => env('SPACE_DEFAULT_REGION'),
+            'bucket' => env('SPACE_BUCKET'),
+            'cdn_endpoint' => env('SPACE_CDN_ENDPOINT'),
+            'folder' => env('SPACE_FOLDER'),
+            'url' => env('SPACE_URL'),
+            'endpoint' => env('SPACE_ENDPOINT'),
+            'use_path_style_endpoint' => env('SPACE_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => true,
         ],
 
     ],
@@ -71,6 +84,12 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+    ],
+
+    'folders' => [
+        'dev_profiles' => 'dev_profiles',
+        'company' => 'company',
+        'cv' => 'cv'
     ],
 
 ];

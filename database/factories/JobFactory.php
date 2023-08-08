@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,9 +24,8 @@ class JobFactory extends Factory
             "job_description" => fake()->paragraph(),
             "requirement" => fake()->paragraph(),
             "responsibilities" => fake()->paragraph(),
-            "company" => fake()->title,
-            "company_image"=> fake()->imageUrl(),
-            "company_website" => fake()->url()
+            "company_id" => Company::pluck('id')->random(),
+            "salary" => fake()->randomNumber()
         ];
     }
 }

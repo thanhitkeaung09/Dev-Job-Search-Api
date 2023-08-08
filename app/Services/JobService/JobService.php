@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\JobService;
 
+use App\Http\Resources\JobResource;
 use App\Models\Job;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class JobService {
     public function search_jobs($request)
     {
-        $query = Job::query();
+        $query = Job::with('company');
 
     $data = $request->all();
     if (is_array($data)) {
@@ -23,12 +24,13 @@ class JobService {
     }
 
     $results = $query->paginate(12);
-    return $results;
+    return JobResource::collection($results);
     }
 
     public function show_jobs()
     {
-        $jobs = Job::query()->paginate(12);
+        // return Job::with('company')->get();
+        $jobs = Job::with('company')->paginate(12);
 
         // Convert the "created_at" date for each job into "minutes ago", "hours ago", or "days ago"
         foreach ($jobs as $job) {
@@ -51,11 +53,11 @@ class JobService {
             }
         }
     
-        return $jobs;
+        return JobResource::collection($jobs);
     }
 
     public function single_job($type){
-        $job = Job::query()->find($type);
+        $job = Job::with('company')->find($type);
 
         $createdAt = Carbon::parse($job->created_at);
         $now = Carbon::now();
@@ -75,7 +77,7 @@ class JobService {
             $job->timestamp = $diffInDays . " " . ($diffInDays === 1 ? "d ago" : "d ago");
         }
 
-        return $job;
+        return new JobResource($job);
     }
 
 }

@@ -23,8 +23,15 @@ class Job extends Model
         return $this->belongsToMany(User::class, 'job_users')->withTimestamps();
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function newEloquentBuilder($query): JobBuilder
     {
         return new JobBuilder($query);   
     }
+
+   
 }

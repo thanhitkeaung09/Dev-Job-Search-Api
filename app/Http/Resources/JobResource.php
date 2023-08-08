@@ -22,11 +22,10 @@ class JobResource extends JsonResource
             "job_description" => $this->job_description,
             "requirement" => $this->requirement,
             "responsibilities" => $this->responsibilities,
-            "company" => $this->company,
-            "company_image" => $this->company_image,
-            "company_website" => $this->company_website,
+            "salary" => $this->salary,
             "created_at" => $this->created_at,
-            "updated_at" => $this->updated_at
+            "updated_at" => $this->updated_at,
+            "company" => $this->company,
         ];
     }
 }

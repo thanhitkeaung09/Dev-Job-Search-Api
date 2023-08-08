@@ -20,9 +20,8 @@ return new class extends Migration
             $table->longText('job_description');
             $table->longText('requirement');
             $table->longText('responsibilities');
-            $table->string('company');
-            $table->string('company_image');
-            $table->string('company_website');
+            $table->foreignId('company_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('salary');
             $table->timestamps();
         });
     }

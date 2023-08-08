@@ -25,7 +25,8 @@ class JobFactory extends Factory
             "requirement" => fake()->paragraph(),
             "responsibilities" => fake()->paragraph(),
             "company_id" => Company::pluck('id')->random(),
-            "salary" => fake()->randomNumber()
+            "salary" => fake()->randomNumber(),
+            "candidates" => fake()->randomNumber()
         ];
     }
 }

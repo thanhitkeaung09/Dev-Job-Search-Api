@@ -24,7 +24,7 @@ class JobService {
     }
 
     $results = $query->paginate(12);
-    return JobResource::collection($results);
+    return $results;
     }
 
     public function show_jobs()
@@ -53,7 +53,7 @@ class JobService {
             }
         }
     
-        return JobResource::collection($jobs);
+        return $jobs;
     }
 
     public function single_job($type){
@@ -77,7 +77,7 @@ class JobService {
             $job->timestamp = $diffInDays . " " . ($diffInDays === 1 ? "d ago" : "d ago");
         }
 
-        return new JobResource($job);
+        return $job;
     }
 
 }

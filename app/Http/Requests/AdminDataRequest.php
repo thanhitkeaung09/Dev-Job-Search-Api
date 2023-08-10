@@ -23,7 +23,8 @@ class AdminDataRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email" => ['required'],
+            "name" => ['required'],
+            "password" => ['required'],
             "password" => ['required']
         ];
     }
@@ -31,8 +32,9 @@ class AdminDataRequest extends FormRequest
     public function payload(): AdminData
     {
         return AdminData::of([
-            "email" => $this->email,
-            "password" => $this->password
+            "name" => $this->name,
+            "password" => $this->password,
+            "image" => $this->image
         ]);
     }
 }

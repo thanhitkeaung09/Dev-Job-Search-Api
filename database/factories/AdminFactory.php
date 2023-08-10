@@ -18,6 +18,8 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
+            "name" => "Dev Job Search Admin",
+            "image" => fake()->imageUrl(),
             "email" => 'dev-job-search-admin@gmail.com',
             "password" => Hash::make("admin1234")
         ];

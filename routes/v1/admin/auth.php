@@ -39,3 +39,16 @@ Route::prefix('job')->as(':job')->middleware('auth:admin')->group(
 Route::prefix('cv')->as(':cv')->middleware('auth:admin')->group(
     base_path('/routes/v1/admin/cv.php')
 );
+/**
+ * Change Admin Name , Password , Image
+ */
+Route::prefix('auth')->as(':auth')->middleware('auth:admin')->group(
+    base_path('/routes/v1/admin/admin.php')
+);
+
+/**\
+ * Company Create , Retrieve , Update , Delete
+ */
+Route::prefix('company')->as(':company')->middleware('auth:admin')->group(
+    base_path('/routes/v1/admin/company.php')
+);

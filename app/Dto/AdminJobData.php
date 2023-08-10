@@ -16,9 +16,9 @@ class AdminJobData implements Dto
         public string $job_description,
         public string $requirement,
         public string $responsibilities,
-        public string $company,
-        public UploadedFile $company_image,
-        public string $company_website
+        public string $company_id,
+        public string $salary,
+        public string $candidates
     ) {
     }
 
@@ -32,9 +32,9 @@ class AdminJobData implements Dto
             job_description: $data['job_description'],
             requirement: $data['requirement'],
             responsibilities: $data['responsibilities'],
-            company: $data['company'],
-            company_image: $data['company_image'],
-            company_website: $data['company_website']
+            company_id: $data['company_id'],
+            salary: $data['salary'],
+            candidates: $data['candidates']
         );
     }
 
@@ -48,9 +48,9 @@ class AdminJobData implements Dto
             "job_description" => $this->job_description,
             "requirement" => $this->requirement,
             "responsibilities" => $this->responsibilities,
-            "company" => $this->company,
-            "company_image" => $this->company_image,
-            "company_website" => $this->company_website
+            "company_id" => $this->company_id,
+            "salary" => $this->salary,
+            'candidates' => $this->candidates
         ];
     }
 }

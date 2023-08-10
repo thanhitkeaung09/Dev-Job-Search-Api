@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\AdminService;
 
+use App\Http\Response\ApiErrorResponse;
+use App\Http\Response\ApiSuccessResponse;
 use App\Models\Job;
 use App\Services\FileStorageService\FileStorageService;
 
@@ -15,38 +17,46 @@ class JobService
     }
     public function create($request)
     {
-        $path = $this->fileStorageService->upload(
-            config('filesystems.folders.cv'),
-            $request->company_image
-        );
-        $job = Job::create([...$request->toArray(), 'company_image' => $path]);
+        $job = Job::create([...$request->toArray()]);
         return $job;
     }
 
     public function single($type)
     {
-        $job = Job::find($type);
-        return $job;
+        $job = Job::with('company')->find($type);
+        if ($job) {
+            return new ApiSuccessResponse($job);
+        } else {
+            return new ApiErrorResponse(
+                status: 401,
+                success: false,
+                message: "Job Not Found"
+            );
+        }
     }
 
     public function all()
     {
-        return Job::query()->get();
+        return Job::with('company')->paginate(5);
     }
 
     public function delete($type)
     {
-        Job::query()->delete($type);
-        return "Job is deleted successfully";
+        $job = Job::find($type);
+        if ($job) {
+            $job->delete();
+            return new ApiSuccessResponse('Job is deleted successfully');
+        } else {
+            return new ApiErrorResponse(
+                status: 401,
+                success: false,
+                message: "Job Not Found"
+            );
+        }
     }
 
     public function update($type, $request)
     {
-        // return $request->payload();
-        $path = $this->fileStorageService->upload(
-            config('filesystems.folders.cv'),
-            $request->company_image
-        );
         $job = Job::find($type);
         $job->position = $request->position;
         $job->shift = $request->shift;
@@ -54,9 +64,10 @@ class JobService
         $job->job_description = $request->job_description;
         $job->requirement = $request->requirement;
         $job->responsibilities = $request->responsibilities;
-        $job->company = $request->company;
-        $job->company_image = $path;
-        $job->company_website = $request->company_website;
+        $job->company_id = $request->company_id;
+        $job->salary = $request->salary;
+        $job->candidates = $request->candidates;
+        //to start here
         $job->update();
         return "Job is updated successfully";
     }

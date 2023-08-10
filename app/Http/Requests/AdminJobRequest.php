@@ -30,9 +30,9 @@ class AdminJobRequest extends FormRequest
             'job_description' => ['required'],
             'requirement' => ['required'],
             'responsibilities' => ['required'],
-            'company' => ['required'],
-            'company_image' => ['required'],
-            'company_website' => ['required']
+            'company_id' => ['required'],
+            'salary' => ['required'],
+            'candidates' => ['required']
         ];
     }
 
@@ -46,9 +46,9 @@ class AdminJobRequest extends FormRequest
             'job_description' => $this->job_description,
             'requirement' => $this->requirement,
             'responsibilities' => $this->responsibilities,
-            'company' => $this->company,
-            'company_image' => $this->company_image,
-            'company_website' => $this->company_website
+            'company_id' => $this->company_id,
+            'salary' => $this->salary,
+            'candidates' => $this->candidates
         ]);
     }
 }

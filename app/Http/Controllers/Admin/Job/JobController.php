@@ -22,7 +22,7 @@ class JobController extends Controller
 
     public function single(string $type)
     {
-        return new ApiSuccessResponse($this->jobService->single($type));
+        return $this->jobService->single($type);
     }
 
     public function all()
@@ -31,7 +31,7 @@ class JobController extends Controller
     }
     public function delete(string $type)
     {
-        return new ApiSuccessResponse($this->jobService->delete($type));
+        return $this->jobService->delete($type);
     }
     public function update(string $type, AdminJobRequest $request)
     {

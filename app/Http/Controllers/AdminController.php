@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AdminDataRequest;
+use App\Http\Response\ApiErrorResponse;
 use App\Http\Response\ApiSuccessResponse;
+use App\Models\Admin;
 use App\Services\AdminService\AdminService;
 use App\Services\AuthService\AuthService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -15,9 +17,20 @@ class AdminController extends Controller
         public AuthService $authService
     ) {
     }
-    public function __invoke(AdminDataRequest $adminDataRequest)
+    public function __invoke(Request $request)
     {
-        return new ApiSuccessResponse($this->adminService->login($adminDataRequest));
+        $admin = Admin::query()->where('email', $request->email)->first();
+        $check = Hash::check($request->password, $admin->password);
+        if ($check) {
+            return new ApiSuccessResponse($this->adminService->login($request));
+        } else {
+            return new ApiErrorResponse(
+                success: false,
+                status: 401,
+                message: "Login Fail",
+            );
+        }
+        // return new ApiSuccessResponse($this->adminService->login($request));
     }
 
     public function logout()

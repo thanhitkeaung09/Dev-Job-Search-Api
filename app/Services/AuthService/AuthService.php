@@ -43,19 +43,26 @@ class AuthService
     public function register($request)
     {
         $user = User::query()->where('email', $request->email)->first();
-        if ($user) {
-            throw new Exception('User exists');
-        }
-        $data = User::create([
-            "name" => $request->name,
-            "email" => $request->email,
-            "password" => Hash::make($request->password)
-        ]);
+        
         $otp = $this->generate();
-        $OTP = $this->Otp($data->email, $otp);
-        ForgetPassCode::create(["email"=>$data->email,"otp"=>$otp, "expired_at" => now()->addMinute(30) ]);
-        Mail::to($data->email)->send(new OTPSend($data, $OTP));
+        $forgetExists = ForgetPassCode::query()->where('email',$request->email)->exists();
+        $otpExists = OTP::query()->where('email',$request->email)->exists();
+        $old_otp = OTP::query()->where("email", $request->email)->first();
+
+        if($forgetExists || $otpExists){
+            $old_otp->update(['otp' => $otp, "expired_at" => now()->addMinute()]);
+        }
+        else{
+            $OTP = $this->Otp($request->email, $otp);
+            ForgetPassCode::create(["email"=>$request->email,"otp"=>$otp, "expired_at" => now()->addMinute(30) ]);
+        }
+        Mail::to($request->email)->send(new OTPSend($request->name, $OTP));
         return "Email Sent";
+
+
+        // ForgetPassCode::create(["email"=>$request->email,"otp"=>$otp, "expired_at" => now()->addMinute(30) ]);
+        // Mail::to($request->email)->send(new OTPSend($request->name, $OTP));
+        // return "Email Sent";
     }
 
     public function mail_login($request)
@@ -114,14 +121,6 @@ class AuthService
         } } else {
             throw new Exception("OTP Code is expired");
         }
-
-        // $user = User::query()->where('email', $request->email)->first();
-        // if ($request->password === $request->new_password) {
-        //     $user->update(["password" => Hash::make($request->password)]);
-        //     return $this->socialService->generate($user, $user->email);
-        // } else {
-        //     throw new Exception('Password does not match');
-        // }
     }
 
     public function logout(User | Admin $user)

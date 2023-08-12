@@ -26,7 +26,7 @@ class JobService
             }
         }
 
-        $results = $query->paginate(12);
+        $results = $query->get();
         return $results;
     }
 

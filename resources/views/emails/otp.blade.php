@@ -1,5 +1,5 @@
 <x-mail::message>
-  Dear {{ $user ? $user->name : 'Customer' }},
+  Dear {{ $user ? $user : 'Customer' }},
 
   Thank you for using our services. To complete your verification or authentication process, please use the following
   One-Time Password (OTP) code.

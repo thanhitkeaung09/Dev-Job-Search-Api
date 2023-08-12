@@ -17,7 +17,7 @@ class ForgetPasswordController extends Controller
     }
     public function __invoke(Request $request)
     {
-        return new ApiSuccessResponse($this->forgetPasswordService->code_resend($request));        
+        return $this->forgetPasswordService->code_resend($request);        
     }
 
     public function confirm(Request $request)

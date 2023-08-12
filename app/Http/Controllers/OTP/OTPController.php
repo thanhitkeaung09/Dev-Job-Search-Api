@@ -15,11 +15,11 @@ class OTPController extends Controller
     }
     public function confirm(Request $request)
     {
-        return new ApiSuccessResponse($this->oTPService->confirm($request));
+        return $this->oTPService->confirm($request);
     }
 
     public function resend(Request $request)
     {
-        return new ApiSuccessResponse($this->oTPService->resend($request));
+        return $this->oTPService->resend($request);
     }
 }

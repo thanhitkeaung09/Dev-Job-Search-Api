@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Dto\CompanyData;
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rules\File;
 class CompanyDataRequest extends FormRequest
 {
     /**
@@ -27,7 +27,7 @@ class CompanyDataRequest extends FormRequest
             "email" => ['required'],
             "hotline" => ['required'],
             "location" => ['required'],
-            "image" => ['required'],
+            "image" => ['sometimes'],
             "website" => ['required'],
             "description" => ['required']
         ];

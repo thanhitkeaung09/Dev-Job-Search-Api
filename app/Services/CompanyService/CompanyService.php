@@ -76,19 +76,20 @@ class CompanyService
     {
         $company = Company::find($type);
         if ($company) {
-            $path = $this->fileStorageService->upload(
-                config('filesystems.folders.cv'),
-                $request->image
-            );
-            $company->update([
-                "name" => $request->name,
-                "email" => $request->email,
-                "hotline" => $request->hotline,
-                "location" => $request->location,
-                "image" => $path,
-                "website" => $request->website,
-                "description" => $request->description
-            ]);
+            if($request->image){
+                $path = $this->fileStorageService->upload(
+                    config('filesystems.folders.cv'),
+                    $request->image
+                );
+                $company->image = $path;
+            }
+            $company->name = $request->name;
+            $company->email = $request->email;
+            $company->hotline = $request->hotline;
+            $company->location = $request->location;
+            $company->website = $request->website;
+            $company->description = $request->description;
+            $company->update();
             return new ApiSuccessResponse('Company is updated successfully');
         } else {
             return new ApiErrorResponse(

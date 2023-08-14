@@ -48,8 +48,9 @@ class CompanyController extends Controller
     /**
      * Update Company
      */
-    public function update(string $type, CompanyDataRequest $request)
+    public function update(string $type, Request $request)
     {
-        return $this->companyService->update($type, $request->payload());
+        
+        return $this->companyService->update($type, $request);
     }
 }

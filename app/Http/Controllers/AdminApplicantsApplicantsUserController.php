@@ -15,4 +15,14 @@ class AdminApplicantsApplicantsUserController extends Controller
     {
         return $this->applicantService->applicant();
     }
+
+    public function applicant_detail(string $type)
+    {
+        return $this->applicantService->applicant_detail($type);
+    }
+
+    public function applicant_user_detail()
+    {
+        return $this->applicantService->applicant_user_detail();
+    }
 }

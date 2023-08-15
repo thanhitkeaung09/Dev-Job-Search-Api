@@ -17,4 +17,9 @@ class CV extends Model
             get: fn ($value) => $value ? route('v1:show', $value) : $value,
         );
     }
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
 }

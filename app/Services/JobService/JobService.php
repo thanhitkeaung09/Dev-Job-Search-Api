@@ -33,7 +33,7 @@ class JobService
     public function show_jobs()
     {
         // return Job::with('company')->get();
-        $jobs = Job::with('company')->paginate(12);
+        $jobs = Job::with('company')->latest()->paginate(12);
 
         // Convert the "created_at" date for each job into "minutes ago", "hours ago", or "days ago"
         foreach ($jobs as $job) {

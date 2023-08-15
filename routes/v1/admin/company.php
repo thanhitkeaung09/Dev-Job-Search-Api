@@ -14,6 +14,14 @@ Route::get(
 )->name('company:list');
 
 /**
+ * Get Company List Dropdown
+ */
+Route::get(
+    uri : '/dropdown',
+    action : [CompanyController::class, 'dropdown']
+)->name('company:dropdown');
+
+/**
  * Get a single company
  */
 Route::get(

@@ -37,4 +37,9 @@ class JobController extends Controller
     {
         return new ApiSuccessResponse($this->jobService->update($type, $request));
     }
+
+    public function job_detail_list()
+    {
+        return $this->jobService->job_detail_list();
+    }
 }

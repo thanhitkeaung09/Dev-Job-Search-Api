@@ -44,13 +44,20 @@ class CompanyController extends Controller
     {
         return $this->companyService->create($request->payload());
     }
+    /**
+     * Company List including jobs , applicants and detail
+     */
+    public function company_list()
+    {
+        return new ApiSuccessResponse($this->companyService->company_list());
+    }
 
     /**
      * Update Company
      */
     public function update(string $type, Request $request)
     {
-        
+
         return $this->companyService->update($type, $request);
     }
 }

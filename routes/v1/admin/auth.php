@@ -52,3 +52,15 @@ Route::prefix('auth')->as(':auth')->middleware('auth:admin')->group(
 Route::prefix('company')->as(':company')->middleware('auth:admin')->group(
     base_path('/routes/v1/admin/company.php')
 );
+
+Route::prefix('applicants')->as(':applicants')->middleware('auth:admin')->group(
+    base_path('/routes/v1/admin/applicants.php')
+);
+
+Route::prefix('users')->as(':users')->middleware('auth:admin')->group(
+    base_path('/routes/v1/admin/users.php')
+);
+
+Route::prefix('total')->as(':total')->middleware('auth:admin')->group(
+    base_path('/routes/v1/admin/total.php')
+);

@@ -21,6 +21,6 @@ class Company extends Model
 
     public function job()
     {
-        return $this->hasOne(Job::class);
+        return $this->hasMany(Job::class);
     }
 }

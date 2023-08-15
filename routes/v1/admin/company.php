@@ -44,3 +44,11 @@ Route::post(
     uri: '/update/{company_id}',
     action: [CompanyController::class, 'update']
 )->name('update:company');
+
+/**
+ * Company Detail List including applicants , total jobs
+ */
+Route::get(
+    uri: '/lists/detail',
+    action: [CompanyController::class, 'company_list']
+)->name('company');

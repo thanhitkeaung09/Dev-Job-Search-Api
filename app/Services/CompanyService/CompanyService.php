@@ -76,7 +76,7 @@ class CompanyService
     {
         $company = Company::find($type);
         if ($company) {
-            if($request->image){
+            if ($request->image) {
                 $path = $this->fileStorageService->upload(
                     config('filesystems.folders.cv'),
                     $request->image
@@ -98,5 +98,18 @@ class CompanyService
                 message: "Company Not Found"
             );
         }
+    }
+
+    public function company_list()
+    {
+        $companies = Company::with(['job' => function ($query) {
+            $query->withCount('users');
+        }])->withCount('job')->latest()->paginate(5);
+
+        $companies->map(function ($c) {
+            $c->total_application_user = $c->job->sum('users_count');
+            return $c;
+        });
+        return $companies;
     }
 }

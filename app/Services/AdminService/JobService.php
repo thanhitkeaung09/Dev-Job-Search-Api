@@ -71,4 +71,9 @@ class JobService
         $job->update();
         return "Job is updated successfully";
     }
+
+    public function job_detail_list()
+    {
+        return new ApiSuccessResponse(Job::with(['company'])->withCount('users')->paginate(5));
+    }
 }

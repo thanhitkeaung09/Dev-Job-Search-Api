@@ -44,3 +44,11 @@ Route::post(
     uri: '/update/{job_id}',
     action: [JobController::class, 'update']
 )->name('job:update');
+
+/**
+ * Jobs with detail including applicants
+ */
+Route::get(
+    uri: '/detail/lists',
+    action: [JobController::class, 'job_detail_list']
+)->name('job:detail:applicants');

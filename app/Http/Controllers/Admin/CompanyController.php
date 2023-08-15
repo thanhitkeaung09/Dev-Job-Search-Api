@@ -53,4 +53,11 @@ class CompanyController extends Controller
         
         return $this->companyService->update($type, $request);
     }
+    /**
+     * DropDown
+     */
+    public function dropdown()
+    {
+        return $this->companyService->dropdown();
+    }
 }

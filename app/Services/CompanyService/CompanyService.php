@@ -23,6 +23,11 @@ class CompanyService
         return $company;
     }
 
+    public function dropdown()
+    {
+        return new ApiSuccessResponse(Company::query()->get());
+    }
+
     public function single($type)
     {
         $company = Company::find($type);

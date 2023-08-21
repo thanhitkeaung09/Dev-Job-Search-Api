@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Events\NotificationEvent;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\OTP\OTPController;
 use App\Http\Controllers\Image\ImageController;
@@ -91,7 +92,7 @@ Route::prefix('v1')->as('v1')->group(static function (): void {
      * Forger Password Controller
      */
 
-     Route::prefix('forget')->as(':forget')->middleware(['check.app.key'])->group(
+    Route::prefix('forget')->as(':forget')->middleware(['check.app.key'])->group(
         base_path('/routes/v1/user/forget.php')
     );
 
@@ -109,6 +110,14 @@ Route::prefix('v1')->as('v1')->group(static function (): void {
     Route::prefix('admin')->as(':admin')->middleware('check.app.key')->group(
         base_path('/routes/v1/admin/auth.php')
     );
+
+    /**
+     * Websocket Testing
+     */
+    Route::post('/websocket', function () {
+        event(new NotificationEvent("min ga lar par"));
+        return "hello";
+    });
 
     /**
      * Image Attribut Casting

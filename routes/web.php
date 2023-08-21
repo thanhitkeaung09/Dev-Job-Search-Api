@@ -18,7 +18,9 @@ Route::get('/websocket', function () {
     return view('websocket.websocket');
 });
 
-Route::get('/user/like/list', function(){
+
+
+Route::get('/user/like/list', function () {
     event(new NotificationEvent("min ga lar par"));
     return "hello";
 })->name('user:post:like');

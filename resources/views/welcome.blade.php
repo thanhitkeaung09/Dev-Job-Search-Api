@@ -140,6 +140,6 @@
     </body>
         <script type="module">
         Echo.channel('noti')
-            .listen('.server.noti.send', (e) => console.log('RealTimeMessage: ' + e.message));
+            .listen('.server.noti.send', (e) => console.log('RealTimeMessage: ' + e.message.user.name));
     </script>
 </html>

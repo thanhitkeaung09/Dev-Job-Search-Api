@@ -6,10 +6,14 @@ use App\Events\NotificationEvent;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\OTP\OTPController;
 use App\Http\Controllers\Image\ImageController;
+use App\Http\Controllers\NotiCountController;
 use App\Http\Controllers\Register\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->as('v1')->group(static function (): void {
+
+   
+
     /**
      * Social Login Gamil
      */
@@ -63,6 +67,30 @@ Route::prefix('v1')->as('v1')->group(static function (): void {
         uri: '/logout',
         action: [AuthController::class, 'logout']
     )->name('email:login');
+
+     /**
+     * Notification Count
+     */
+    Route::middleware(['check.app.key', 'auth:sanctum'])->post(
+        uri: '/noti-count',
+        action: NotiCountController::class
+    )->name('noti:count');
+
+    /**
+     * Show All Notification
+     */
+    Route::middleware(['check.app.key', 'auth:sanctum'])->get(
+        uri: '/all-notification',
+        action: [NotiCountController::class,'all']
+    )->name('noti:all');
+
+       /**
+     * Read a Notification
+     */
+    Route::middleware(['check.app.key', 'auth:sanctum'])->get(
+        uri: '/read-notification/{notiId}',
+        action: [NotiCountController::class,'read']
+    )->name('noti:all');
 
     /**
      * Test

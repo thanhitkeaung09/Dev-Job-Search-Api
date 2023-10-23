@@ -46,7 +46,8 @@ class ForgetMailOTP extends Mailable
             markdown: 'emails.forgetotp',
             with: [
                 'user' => $this->user,
-                'otp' => $this->otp
+                'otp' => $this->otp,
+                'img' => "https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2019/05/joseph-barrientos-49318-unsplash-e1558728034701.jpg?resize=1500%2C1000&ssl=1"
             ]
         );
     }

@@ -42,14 +42,18 @@ class AuthService
 
     public function register($request)
     {
+        // $OTP = "hello";
+        // $send = Mail::to($request->email)->send(new OTPSend($request->name, $OTP));
+        // dd($send);
         $user = User::query()->where('email', $request->email)->first();
-        
+
         $otp = $this->generate();
         $forgetExists = ForgetPassCode::query()->where('email',$request->email)->exists();
         $otpExists = OTP::query()->where('email',$request->email)->exists();
         $old_otp = OTP::query()->where("email", $request->email)->first();
 
         if($forgetExists || $otpExists){
+            // return "helo";
             $old_otp->update(['otp' => $otp, "expired_at" => now()->addMinute()]);
         }
         else{
@@ -116,7 +120,7 @@ class AuthService
             // Expire the OTP by setting expired_at to a past time (e.g., one second ago)
             $otp->expired_at = Carbon::now()->subSecond();
             $otp->save();
-            
+
             return $user;
         } } else {
             throw new Exception("OTP Code is expired");

@@ -18,6 +18,12 @@ Route::get('/websocket', function () {
     return view('websocket.websocket');
 });
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+
 
 
 Route::get('/user/like/list', function () {

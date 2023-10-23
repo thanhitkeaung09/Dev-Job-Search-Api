@@ -1,4 +1,5 @@
 <x-mail::message>
+  [<img src="{{$img}}">](http://google.com.au/)
   Dear {{ $user ? $user : 'Customer' }},
 
   Thank you for using our services. To complete your forget password process, please use the following

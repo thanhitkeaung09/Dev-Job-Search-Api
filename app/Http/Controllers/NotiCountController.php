@@ -16,12 +16,13 @@ class NotiCountController extends Controller
     }
 
     public function all(){
-        // $notification = DB::table('job_users')->paginate(10);
         $notification = User::with(['jobs' => function ($query) {
             $query->withPivot('is_read');
         }])->get();
-
-        $modifiedNotifications = $notification->map(function ($user) {
+    
+        $modifiedNotifications = $notification->filter(function ($user) {
+            return $user->jobs->isNotEmpty();
+        })->map(function ($user) {
             $user->jobs->map(function ($job) {
                 $job->is_read = $job->pivot->is_read;
                 unset($job->pivot);
@@ -29,7 +30,7 @@ class NotiCountController extends Controller
     
             return $user;
         });
-
+    
         return new ApiSuccessResponse($modifiedNotifications);
     }
 
